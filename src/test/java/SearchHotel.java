@@ -42,10 +42,29 @@ public class SearchHotel {
         //hotelNames.forEach(el -> System.out.println(el));
         hotelNames.forEach(System.out::println);
 
-        Assert.assertEquals("Jumeirah Beach Hotel", hotelNames.get(0));
-        Assert.assertEquals("Oasis Beach Tower", hotelNames.get(1));
-        Assert.assertEquals("Rose Rayhaan Rotana", hotelNames.get(2));
-        Assert.assertEquals("Hyatt Regency Perth", hotelNames.get(3));
+        Assert.assertEquals(hotelNames.get(0), "Jumeirah Beach Hotel");
+        Assert.assertEquals( hotelNames.get(1), "Oasis Beach Tower");
+        Assert.assertEquals( hotelNames.get(2) ,"Rose Rayhaan Rotana");
+        Assert.assertEquals(hotelNames.get(3), "Hyatt Regency Perth");
+
+    }
+    @Test
+    public void searchHotelNoName(){
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
+        driver.get("http://www.kurs-selenium.pl/demo/");
+        driver.findElement(By.name("checkin")).sendKeys("10/10/2023");
+        driver.findElement(By.name("checkout")).click();
+        driver.findElements(By.xpath(("//td[@class='day ' and text()='28']"))).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
+        driver.findElement(By.id("travellersInput")).click();
+        driver.findElement(By.id("childPlusBtn")).click();
+        driver.findElements(By.xpath("//button[@type='submit' and contains(@class, 'loader')]")).get(0).click();
+
+        WebElement sprawdzanyTekst = driver.findElement(By.xpath("//h2[@class='text-center']"));
+        Assert.assertTrue(sprawdzanyTekst.isDisplayed());
+        Assert.assertEquals(sprawdzanyTekst.getText(), "No Results Found" );
 
     }
 }
