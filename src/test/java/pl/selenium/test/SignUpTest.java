@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import pl.selenium.pages.HotelSearchPage;
 import pl.selenium.test.BaseTest;
 
 import java.util.List;
@@ -17,8 +18,9 @@ public class SignUpTest extends BaseTest {
         String lastName = "Rafal";
         int randomNumber = (int) (Math.random()*100000);
         String email = "tester" + randomNumber + "@tester.pl";
-        driver.findElements(By.xpath("//li[@id='li_myaccount']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
-        driver.findElements(By.xpath("//a[text()='  Sign Up']")).get(1).click();
+        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        hotelSearchPage.openSingUpForm();
+        
         driver.findElement(By.name("firstname")).sendKeys("Rafal");
         driver.findElement(By.name("lastname")).sendKeys("Bednarowicz");
         driver.findElement(By.name("phone")).sendKeys("123456");
