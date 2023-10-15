@@ -1,24 +1,13 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-
-import java.sql.Driver;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class SearchHotel {
-    @Test
+public class SearchHotelTest extends BaseTest {
+    @org.testng.annotations.Test
     public void searchHotel() {
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
         driver.findElement(By.xpath("//span[text()='Search by Hotel or City Name']")).click();
         driver.findElement(By.xpath("//div[@id='select2-drop']//input")).sendKeys("Dubai");
         driver.findElement(By.xpath("//span[@class='select2-match' and text()='Dubai']")).click();
@@ -46,15 +35,9 @@ public class SearchHotel {
         Assert.assertEquals( hotelNames.get(1), "Oasis Beach Tower");
         Assert.assertEquals( hotelNames.get(2) ,"Rose Rayhaan Rotana");
         Assert.assertEquals(hotelNames.get(3), "Hyatt Regency Perth");
-
     }
     @Test
     public void searchHotelNoName(){
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
         driver.findElement(By.name("checkin")).sendKeys("10/10/2023");
         driver.findElement(By.name("checkout")).click();
         driver.findElements(By.xpath(("//td[@class='day ' and text()='28']"))).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
@@ -65,6 +48,5 @@ public class SearchHotel {
         WebElement sprawdzanyTekst = driver.findElement(By.xpath("//h2[@class='text-center']"));
         Assert.assertTrue(sprawdzanyTekst.isDisplayed());
         Assert.assertEquals(sprawdzanyTekst.getText(), "No Results Found" );
-
     }
 }
