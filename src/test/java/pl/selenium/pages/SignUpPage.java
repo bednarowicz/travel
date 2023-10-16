@@ -5,11 +5,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import pl.selenium.model.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class SignUpPage {
+
+    private WebDriver driver;
+
     @FindBy(name = "firstname" )
     private WebElement firstNameInput;
 
@@ -35,31 +39,57 @@ public class SignUpPage {
     private List<WebElement> errors;
     public SignUpPage (WebDriver driver){
         PageFactory.initElements(driver, this);
+        this.driver = driver;
     }
-    public void setFirstNameInput(String firstName){
+    public SignUpPage setFirstNameInput(String firstName){
         firstNameInput.sendKeys(firstName);
+        return this;
     }
-    public void setLastNameInput(String lastName){
+    public SignUpPage setLastNameInput(String lastName){
         lastNameInput.sendKeys(lastName);
+        return this;
     }
-    public void setPhoneInput(String phoneNumber){
+    public SignUpPage setPhoneInput(String phoneNumber){
         phoneInput.sendKeys(phoneNumber);
+        return this;
     }
-    public void setEmailInput(String email){
+    public SignUpPage setEmailInput(String email){
         emailInput.sendKeys(email);
+        return this;
     }
-    public void setPasswordInput(String password){
+    public SignUpPage setPasswordInput(String password){
         passwordInput.sendKeys(password);
+        return this;
     }
-    public void setConfirmPasswordInput(String confirmPassword){
+    public SignUpPage setConfirmPasswordInput(String confirmPassword){
         confirmPasswordInput.sendKeys(confirmPassword);
+        return this;
     }
-    public void signUp(){
+    public LoggedUserPage signUp(){
         signUpButton.click();
+        return new LoggedUserPage(driver);
     }
     public List<String> getErrors(){
         return errors.stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
     }
+   /* public void fillSignForm(String firstName, String secondName, String phone, String email, String password){
+        setFirstNameInput(firstName);
+        setLastNameInput(secondName);
+        setPhoneInput(phone);
+        setEmailInput(email);
+        setPasswordInput(password);
+        setConfirmPasswordInput(password);
+        signUpButton.click();
+    }
+    public void fillSignForm(User user){
+        setFirstNameInput(user.getFirstName());
+        setLastNameInput(user.getSecondName());
+        setPhoneInput(user.getPhone());
+        setEmailInput(user.getEmail());
+        setPasswordInput(user.getPassword());
+        setConfirmPasswordInput(user.getPassword());
+        signUpButton.click();
+    }*/
 }
