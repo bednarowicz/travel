@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
+import pl.selenium.utils.DriverFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,7 +16,7 @@ public class BaseTest {
     public void setup(){
         System.out.println("Before method");
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        driver = DriverFactory.getDriver("Firefox");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get("http://www.kurs-selenium.pl/demo/");
