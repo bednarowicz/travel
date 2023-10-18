@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Travellers">
-    <test name="SearchHotelTest" thread-count="2" parallel="methods">
+    <test name="SearchHotelTest" thread-count="3" parallel="classes">
         <classes>
             <class name="pl.selenium.test.SearchHotelTest"/>
-        </classes>
-    </test> <!-- Test -->
-    <test name="SignUpTest" thread-count="3" parallel="methods">
-        <classes>
             <class name="pl.selenium.test.SignUpTest"/>
         </classes>
-
     </test> <!-- Test -->
 </suite> <!-- Suite -->
