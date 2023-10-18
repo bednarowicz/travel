@@ -1,5 +1,7 @@
 package pl.selenium.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -41,6 +43,7 @@ public class HotelSearchPage {
     private List<WebElement> signUpLink;
 
     private WebDriver driver;
+    public static final Logger logger = LogManager.getLogger();
 
     public HotelSearchPage(WebDriver driver){
         PageFactory.initElements(driver, this);
@@ -48,21 +51,29 @@ public class HotelSearchPage {
     }
 
     public void  setCity(String cityName){
+        logger.info("Setting city " + cityName);
+        //System.out.println("Setting city " + cityName);
         searchHotelSpan.click();
         searchHotelInput.sendKeys(cityName);
         String xpath = String.format("//span[@class='select2-match' and text()='%s']", cityName);
         driver.findElement(By.xpath(xpath)).click();
+        //System.out.println("Setting city done : " + cityName);
+        logger.info("Setting city done : " + cityName);
     }
 
     public void  setDates(String checkin, String checkout){
+        System.out.println("Setting dates checkin " + checkin + " checkout " + checkout);
         checkinInput.sendKeys(checkin);
         checkoutInput.sendKeys(checkout);
+        System.out.println("Setting dates DONE - checkin " + checkin + " checkout " + checkout);
     }
 
     public void setTravellers(int adultsToAdd, int childrenToAdd){
+        logger.info("Adding adults " + adultsToAdd + " and kids: " + childrenToAdd);
         travellersInput.click();
         addTraveller(adultPlusBtn, adultsToAdd);
         addTraveller(childPlusBtn, childrenToAdd);
+        logger.info("Adding travelers done");
     }
 
     public void addTraveller(WebElement travellerButton, int changeAmount){
@@ -72,7 +83,9 @@ public class HotelSearchPage {
     }
 
     public void performSearch(){
+        logger.info("Performing search");
         searchButton.click();
+        logger.info("Performing search done.");
     }
 
     public void openSingUpForm(){
