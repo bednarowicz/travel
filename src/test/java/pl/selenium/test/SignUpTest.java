@@ -1,11 +1,14 @@
 package pl.selenium.test;
 
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pl.selenium.pages.HotelSearchPage;
 import pl.selenium.pages.LoggedUserPage;
 import pl.selenium.pages.SignUpPage;
+import pl.selenium.utils.SeleniumHelper;
+
 import java.util.List;
 
 public class SignUpTest extends BaseTest {

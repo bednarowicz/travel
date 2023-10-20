@@ -5,11 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import pl.selenium.utils.SeleniumHelper;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class SignUpPage {
+    private WebDriver driver;
     @FindBy(name = "firstname" )
     private WebElement firstNameInput;
 
@@ -35,6 +37,7 @@ public class SignUpPage {
     private List<WebElement> errors;
     public SignUpPage (WebDriver driver){
         PageFactory.initElements(driver, this);
+        this.driver = driver;
     }
     public void setFirstNameInput(String firstName){
         firstNameInput.sendKeys(firstName);
@@ -58,6 +61,7 @@ public class SignUpPage {
         signUpButton.click();
     }
     public List<String> getErrors(){
+        SeleniumHelper.waitForNotEmptyList(driver, By.xpath("//div[@class='alert alert-danger']/p"));
         return errors.stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
