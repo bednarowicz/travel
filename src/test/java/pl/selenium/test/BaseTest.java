@@ -22,10 +22,10 @@ public class BaseTest {
         extentReports = new ExtentReports();
         extentReports.attachReporter(htmlReporter);
     }
-    @AfterSuite
+   /* @AfterSuite
     public void afterSuite(){
             extentReports.flush();
-    }
+    }*/
     @BeforeMethod
     public void setup() throws IOException {
         WebDriverManager.chromedriver().setup();

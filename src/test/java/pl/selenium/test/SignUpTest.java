@@ -1,5 +1,6 @@
 package pl.selenium.test;
 
+import com.aventstack.extentreports.ExtentTest;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -7,6 +8,7 @@ import org.testng.asserts.SoftAssert;
 import pl.selenium.pages.HotelSearchPage;
 import pl.selenium.pages.LoggedUserPage;
 import pl.selenium.pages.SignUpPage;
+import pl.selenium.utils.ExtentTestManager;
 import pl.selenium.utils.SeleniumHelper;
 
 import java.util.List;
@@ -15,6 +17,8 @@ public class SignUpTest extends BaseTest {
 
     @Test
     public void signUpTest() {
+        ExtentTest test = ExtentTestManager.startTest("test123", "Sign up basic test");
+
         String lastName = "Bednarowicz";
         int randomNumber = (int) (Math.random()*100000);
         String email = "tester" + randomNumber + "@tester.pl";
@@ -38,6 +42,7 @@ public class SignUpTest extends BaseTest {
     }
     @Test
     public void singnUpTestEmptyFields(){
+        ExtentTest test = ExtentTestManager.startTest("test123", "Sign up empty field");
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
         hotelSearchPage.openSingUpForm();
 
@@ -64,6 +69,7 @@ public class SignUpTest extends BaseTest {
 
     @Test
     public void signUpTestIncorrectEmail(){
+        ExtentTest test = ExtentTestManager.startTest("test123", "Sign up incorrect mail");
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
         hotelSearchPage.openSingUpForm();
 

@@ -6,35 +6,32 @@ import com.aventstack.extentreports.Status;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pl.selenium.pages.HotelSearchPage;
 import pl.selenium.pages.ResultsPage;
 import pl.selenium.utils.ExcelReader;
+import pl.selenium.utils.ExtentTestManager;
 import pl.selenium.utils.SeleniumHelper;
+import pl.selenium.utils.TestListener;
 
 import java.io.IOException;
 import java.util.List;
 
-
+@Listeners(value = {TestListener.class})
 public class SearchHotelTest extends BaseTest {
     @Test
     public void searchHotel() throws IOException {
-
-        ExtentTest test = extentReports.createTest("Search Hotel Test");
+        ExtentTest test = ExtentTestManager.startTest("test123", "Search hoter");
 
         HotelSearchPage hotelSearchPage =new HotelSearchPage(driver);
         hotelSearchPage.setCity("Dubai");
-        test.log(Status.PASS, "Setting city done", SeleniumHelper.getScreenshot(driver));
         hotelSearchPage.setDates("14/04/2021", "21/04/2021");
-        test.log(Status.PASS, "Setting dates done", SeleniumHelper.getScreenshot(driver));
         hotelSearchPage.setTravellers(1, 1);
-        test.log(Status.PASS, "Adding travelers done", SeleniumHelper.getScreenshot(driver));
         hotelSearchPage.performSearch();
-        test.log(Status.PASS, "Performing search done", SeleniumHelper.getScreenshot(driver));
-        test.log(Status.PASS, "Performing search done", SeleniumHelper.getScreenshot(driver));
-        test.log(Status.PASS,"Screenshot", SeleniumHelper.getScreenshot(driver));
         ResultsPage resultsPage = new ResultsPage(driver);
-
+        Assert.assertEquals("a", "b");
         List<String> hotelNames = resultsPage.getHotelList();
 
         hotelNames.forEach(System.out::println);
@@ -43,22 +40,17 @@ public class SearchHotelTest extends BaseTest {
         Assert.assertEquals( hotelNames.get(1), "Oasis Beach Tower");
         Assert.assertEquals( hotelNames.get(2) ,"Rose Rayhaan Rotana");
         Assert.assertEquals(hotelNames.get(3), "Hyatt Regency Perth");
-        test.log(Status.PASS, "Assertions done");
+        //test.log(Status.PASS, "Assertions done");
     }
     @Test
     public void searchHotelNoName() throws IOException {
-        ExtentTest test = extentReports.createTest("Search Hotel No Name Test");
+        ExtentTest test = ExtentTestManager.startTest("test123", "Search hotel with no name");
 
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
         hotelSearchPage.setDates("14/04/2021", "21/04/2021");
-        test.log(Status.PASS, "Setting date done", SeleniumHelper.getScreenshot(driver));
         hotelSearchPage.setTravellers(0, 2);
-        test.log(Status.PASS, "Setting travelers done", SeleniumHelper.getScreenshot(driver));
         hotelSearchPage.performSearch();
-        test.log(Status.PASS, "Performing search done", SeleniumHelper.getScreenshot(driver));
-        test.log(Status.INFO,"Info test", SeleniumHelper.getScreenshot(driver));
-        test.log(Status.WARNING, "warning test", SeleniumHelper.getScreenshot(driver));
-        test.log(Status.FAIL, "fail test", SeleniumHelper.getScreenshot(driver));
+        ExtentTestManager.getTest().log(Status.PASS, "Search performed");
 
         ResultsPage resultsPage = new ResultsPage(driver);
         WebElement sprawdzanyTekst = resultsPage.getResultHeading();
@@ -68,7 +60,7 @@ public class SearchHotelTest extends BaseTest {
     @Test(dataProvider = "data")
     public void searchHotelTestWithDataProvider(String city, String hotel) {
 
-        ExtentTest test = extentReports.createTest("Search Hotel with data provider");
+        ExtentTest test = ExtentTestManager.startTest("data provider", "Search Hotel with data provider");
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
         hotelSearchPage.setCity(city);
         test.log(Status.PASS, "Set city from data provider " + city + " done");
